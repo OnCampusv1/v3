@@ -1,60 +1,67 @@
 import React from 'react';
-import { Search, MapPin, MoreHorizontal, Heart, MessageCircle, Share2, Filter, ArrowUpDown, Calendar, ChevronLeft } from 'lucide-react';
-
+import { Search, MapPin, MoreHorizontal, Heart, MessageCircle, Share2, Filter, Calendar, ChevronLeft, Bell, CheckCircle2, Bookmark, Briefcase } from 'lucide-react';
 // --- Helper Components ---
-const Avatar = ({ src, fallback }: { src?: string; fallback: string }) => (
-  <div className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden border border-gray-100 flex items-center justify-center shrink-0">
-    {src ? <img src={src} alt="Avatar" className="w-full h-full object-cover" /> : <span className="text-xs font-bold text-gray-500">{fallback}</span>}
+const Avatar = ({ src, fallback, size = "w-8 h-8", color = "bg-gray-100 text-gray-500" }: { src?: string; fallback: string, size?: string, color?: string }) => (
+  <div className={`${size} rounded-full ${color} overflow-hidden border border-gray-100 flex items-center justify-center shrink-0`}>
+    {src ? <img src={src} alt="Avatar" className="w-full h-full object-cover" /> : <span className="text-[10px] font-bold">{fallback}</span>}
   </div>
 );
 
-const CompanyLogo = ({ color, letter }: { color: string; letter: string }) => (
-  <div className={`w-10 h-10 rounded-lg ${color} flex items-center justify-center text-white font-bold text-lg shadow-sm`}>
-    {letter}
-  </div>
-);
-
-// --- Screen 1: Jobs ---
+// --- Screen 1: Jobs (Updated for Indian Context) ---
 export const JobsScreen = () => {
   return (
-    <div className="flex flex-col h-full bg-gray-50">
+    <div className="flex flex-col h-full bg-white font-sans">
       {/* Header */}
-      <div className="px-4 pb-2 border-b border-gray-100 bg-white">
+      <div className="px-5 pt-2 pb-3 bg-white sticky top-0 z-10 border-b border-gray-50">
         <div className="flex items-center justify-between mb-4">
-           <div className="flex items-center gap-2">
-             <Avatar fallback="U" src="https://picsum.photos/seed/user1/100/100" />
-             <span className="font-bold text-lg">Jobs</span>
+           <div>
+             <h2 className="text-xl font-bold text-[#0D1C22] tracking-tight">Jobs For You</h2>
+             <p className="text-[10px] text-gray-500 font-medium">IIT Delhi • CSE • Batch '25</p>
            </div>
+           <Avatar fallback="AK" color="bg-[#D7F037] text-[#0D1C22]" />
+        </div>
+        <div className="relative mb-3">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
+            <input type="text" placeholder="Search internships & fresher roles..." className="w-full bg-gray-50 border border-gray-100 rounded-xl py-2.5 pl-9 pr-4 text-xs font-medium outline-none focus:ring-1 focus:ring-[#0D1C22]" />
         </div>
         <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-          <span className="bg-black text-white px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap">All Opportunities</span>
-          <span className="bg-white border border-gray-200 text-gray-600 px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap">My College</span>
-          <span className="p-1 rounded-full border border-gray-200"><Filter size={12} /></span>
+          <span className="bg-[#0D1C22] text-white px-3 py-1.5 rounded-full text-[10px] font-bold whitespace-nowrap shadow-sm">Campus Drives</span>
+          <span className="bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-full text-[10px] font-bold whitespace-nowrap">Internships</span>
+          <span className="bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-full text-[10px] font-bold whitespace-nowrap">Remote</span>
         </div>
       </div>
       
       {/* List */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
-         <p className="text-xs font-semibold text-purple-600 mb-2">Top jobs for Krisha</p>
-         
+      <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50/50">
          {[
-           { company: "EY India", role: "Software Developer", pay: "₹8-12L/yr", time: "3 hours ago", color: "bg-yellow-500", letter: "EY" },
-           { company: "Amazon India", role: "SDE Intern", pay: "₹100K/month", time: "2 days ago", color: "bg-black", letter: "A" },
-           { company: "Flipkart", role: "Backend Engineer", pay: "₹10-15L/yr", time: "Full-time", color: "bg-blue-600", letter: "F" },
+           { company: "Swiggy", role: "SDE Intern", pay: "₹45K/mo", type: "Summer Intern", logo: "https://logo.clearbit.com/swiggy.com", tag: "Campus Hire" },
+           { company: "Cred", role: "Product Design Intern", pay: "₹40K/mo", type: "6 Months", logo: "https://logo.clearbit.com/cred.club", tag: "Early Access" },
+           { company: "Zomato", role: "Frontend Developer", pay: "₹18 LPA", type: "Fresher (2025)", logo: "https://logo.clearbit.com/zomato.com", tag: null },
+           { company: "Razorpay", role: "Data Analyst", pay: "₹12 LPA", type: "Full Time", logo: "https://logo.clearbit.com/razorpay.com", tag: "Actively Hiring" },
+           { company: "Flipkart", role: "Backend Intern", pay: "₹50K/mo", type: "Winter Intern", logo: "https://logo.clearbit.com/flipkart.com", tag: "Shortlisting" },
+           { company: "Uber", role: "Software Engineer", pay: "₹32 LPA", type: "Full Time", logo: "https://logo.clearbit.com/uber.com", tag: "Campus Hire" },
          ].map((job, i) => (
-           <div key={i} className="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex gap-3">
-             <CompanyLogo color={job.color} letter={job.letter} />
-             <div className="flex-1">
+           <div key={i} className="bg-white p-4 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-gray-100 flex gap-3.5 items-start transition-transform active:scale-[0.98]">
+             <div className="w-10 h-10 rounded-xl bg-white border border-gray-100 p-1 flex items-center justify-center shadow-sm shrink-0">
+                <img src={job.logo} alt={job.company} className="w-full h-full object-contain rounded-lg" onError={(e) => { e.currentTarget.src = `https://ui-avatars.com/api/?name=${job.company}&background=random` }} />
+             </div>
+             <div className="flex-1 min-w-0">
                <div className="flex justify-between items-start">
-                  <h4 className="font-bold text-sm text-gray-900">{job.company}</h4>
-                  <span className="text-gray-400"><MoreHorizontal size={14} /></span>
+                  <h4 className="font-bold text-xs text-[#0D1C22] truncate pr-2">{job.role}</h4>
+                  <Bookmark size={14} className="text-gray-300 shrink-0" />
                </div>
-               <p className="text-xs font-medium text-gray-700">{job.role}</p>
-               <div className="flex items-center gap-2 mt-2 text-[10px] text-gray-500">
-                 <span>{job.pay}</span>
-                 <span>•</span>
-                 <span>{job.time}</span>
+               <p className="text-[10px] font-medium text-gray-500 mb-2">{job.company}</p>
+               
+               <div className="flex flex-wrap gap-1.5 mb-2">
+                 <span className="bg-gray-50 border border-gray-100 text-gray-600 px-1.5 py-0.5 rounded text-[9px] font-bold">{job.pay}</span>
+                 <span className="bg-gray-50 border border-gray-100 text-gray-600 px-1.5 py-0.5 rounded text-[9px] font-medium">{job.type}</span>
                </div>
+
+               {job.tag && (
+                   <div className="flex items-center gap-1 text-[9px] font-bold text-[#0D1C22] bg-[#D7F037]/30 px-2 py-0.5 rounded-full w-fit">
+                       <CheckCircle2 size={10} /> {job.tag}
+                   </div>
+               )}
              </div>
            </div>
          ))}
@@ -66,52 +73,63 @@ export const JobsScreen = () => {
 // --- Screen 2: Feed ---
 export const FeedScreen = () => {
   return (
-    <div className="flex flex-col h-full bg-gray-50">
-       <div className="px-4 py-3 bg-white border-b border-gray-100 flex items-center gap-3">
-          <Avatar fallback="F" src="https://picsum.photos/seed/feed/100/100" />
-          <span className="font-bold text-lg">Feed</span>
-       </div>
-       <div className="flex gap-2 px-4 py-2 bg-white overflow-x-auto border-b border-gray-100">
-          <span className="bg-black text-white px-3 py-1 rounded-full text-xs">All</span>
-          <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs">Your college</span>
-          <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs">Employers</span>
+    <div className="flex flex-col h-full bg-[#FAFAFA] font-sans">
+       <div className="px-5 pt-4 pb-3 bg-white border-b border-gray-50 flex items-center justify-between sticky top-0 z-10">
+          <span className="font-bold text-lg text-gray-900">Community</span>
+          <Bell size={18} className="text-gray-400" />
        </div>
        
-       <div className="flex-1 overflow-y-auto">
+       <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-12">
           {/* Post 1 */}
-          <div className="bg-white mb-2 p-4 pb-0">
-             <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <Avatar fallback="K" src="https://picsum.photos/seed/krisha/100/100" />
-                  <div>
-                    <h4 className="text-xs font-bold">Krisha Singh</h4>
-                    <p className="text-[10px] text-gray-500">B.Tech CSE • NSUT</p>
-                  </div>
+          <div className="bg-white p-4 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-gray-100">
+             <div className="flex items-center gap-3 mb-3">
+                <Avatar fallback="KS" />
+                <div>
+                  <h4 className="text-xs font-bold text-gray-900">Krisha Singh</h4>
+                  <p className="text-[9px] text-gray-500 font-medium">B.Tech CSE • NSUT</p>
                 </div>
-                <span className="text-[10px] text-gray-400">2m</span>
+                <span className="ml-auto text-[9px] text-gray-300 font-medium">2m</span>
              </div>
-             <p className="text-xs text-gray-800 leading-snug mb-3">
-               Just received my offer letter from Microsoft! 🎉 Can't believe this is happening. Thank you to everyone who supported me through the interview process.
+             <p className="text-xs text-gray-600 leading-relaxed mb-3">
+               Just accepted my offer at Microsoft! 🚀 Huge thanks to the OnCampus community for the interview prep resources.
              </p>
-             <div className="flex items-center justify-between py-3 border-t border-gray-50 text-gray-500">
-                <div className="flex gap-4 text-xs font-medium">
-                  <span className="flex items-center gap-1 hover:text-red-500"><Heart size={14} /> 234</span>
-                  <span className="flex items-center gap-1"><MessageCircle size={14} /> 45</span>
-                </div>
-                <Share2 size={14} />
+             <div className="flex items-center gap-4 pt-3 border-t border-gray-50">
+                <button className="flex items-center gap-1.5 text-gray-400 hover:text-red-500 transition-colors">
+                    <Heart size={14} /> <span className="text-[10px] font-bold">284</span>
+                </button>
+                <button className="flex items-center gap-1.5 text-gray-400 hover:text-blue-500 transition-colors">
+                    <MessageCircle size={14} /> <span className="text-[10px] font-bold">42</span>
+                </button>
              </div>
           </div>
           
-           {/* Post 2 */}
-           <div className="bg-white p-4">
+           {/* Post 2 - Official */}
+           <div className="bg-white p-4 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-gray-100 relative overflow-hidden">
+             <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#D7F037]"></div>
              <div className="flex items-center gap-2 mb-2">
-               <Avatar fallback="K" src="https://picsum.photos/seed/kavita/100/100" />
+               <div className="w-6 h-6 rounded-md bg-black flex items-center justify-center">
+                   <span className="text-[8px] font-bold text-white">UB</span>
+               </div>
                <div>
-                  <h4 className="text-xs font-bold">Kavita Menon ✅</h4>
-                  <p className="text-[10px] text-gray-500">HR Manager • EY India</p>
+                  <h4 className="text-xs font-bold text-gray-900">Uber University Team</h4>
+                  <p className="text-[9px] text-gray-500 font-medium">Official Hiring Update</p>
                </div>
              </div>
-             <p className="text-xs text-gray-800">We're excited to announce openings for our Graduate Program 2024!</p>
+             <p className="text-xs text-gray-600 leading-relaxed">Applications for the Summer Analyst program are closing tonight. Apply now!</p>
+          </div>
+
+          {/* Post 3 */}
+          <div className="bg-white p-4 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-gray-100">
+             <div className="flex items-center gap-3 mb-3">
+                <Avatar fallback="RV" color="bg-blue-100 text-blue-600" />
+                <div>
+                  <h4 className="text-xs font-bold text-gray-900">Rahul V.</h4>
+                  <p className="text-[9px] text-gray-500 font-medium">NIT Trichy</p>
+                </div>
+             </div>
+             <p className="text-xs text-gray-600 leading-relaxed">
+               Can anyone share the interview experience for the Google step internship?
+             </p>
           </div>
        </div>
     </div>
@@ -121,67 +139,57 @@ export const FeedScreen = () => {
 // --- Screen 3: Events ---
 export const EventsScreen = () => {
   return (
-    <div className="flex flex-col h-full bg-gray-50">
-      <div className="px-4 py-3 bg-white border-b border-gray-100 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center text-purple-600">
-              <Calendar size={18} />
-            </div>
-            <span className="font-bold text-lg">Events</span>
-        </div>
+    <div className="flex flex-col h-full bg-[#FAFAFA] font-sans">
+      <div className="px-5 pt-4 pb-4 bg-white sticky top-0 z-10 shadow-sm">
+        <h2 className="text-xl font-bold text-gray-900 mb-1">Schedule</h2>
+        <p className="text-[10px] text-gray-500 font-medium">3 Upcoming drives this week</p>
       </div>
       
-      <div className="p-4 flex-1 overflow-y-auto">
-        <div className="flex justify-between items-center mb-4">
-          <span className="text-xs font-bold text-gray-700">48 upcoming events</span>
-          <span className="text-[10px] flex items-center gap-1 text-gray-500"><ArrowUpDown size={10} /> Date</span>
+      <div className="p-4 flex-1 overflow-y-auto space-y-3 pb-12">
+        {/* Date Header */}
+        <div className="flex items-center gap-2 mb-2">
+            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Today</span>
+            <div className="h-px bg-gray-200 flex-1"></div>
         </div>
 
         {/* Event Card */}
-        <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 relative overflow-hidden">
-           <div className="absolute top-0 left-0 w-1 h-full bg-purple-500"></div>
-           <div className="flex items-start justify-between mb-2">
-             <div className="flex gap-2">
-                <CompanyLogo color="bg-blue-800" letter="TCS" />
-                <div>
-                   <h4 className="text-sm font-bold text-gray-900">TCS - Pre-Placement Talk</h4>
-                   <p className="text-[10px] text-gray-500">Tata Consultancy Services</p>
-                </div>
-             </div>
+        <div className="bg-white p-4 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-gray-100 flex gap-4">
+           <div className="flex flex-col items-center justify-center w-10 h-10 bg-purple-50 rounded-xl text-purple-600 shrink-0">
+              <span className="text-[9px] font-bold uppercase">Oct</span>
+              <span className="text-xs font-black">24</span>
            </div>
-           
-           <div className="space-y-1.5 mt-3 mb-4">
-              <div className="flex items-center gap-2 text-[10px] text-gray-600">
-                 <Calendar size={12} />
-                 <span>Tomorrow, Jan 15 • 10:00 AM</span>
+           <div className="flex-1 min-w-0">
+              <h4 className="text-xs font-bold text-gray-900 truncate">Google Pre-Placement Talk</h4>
+              <p className="text-[10px] text-gray-500 mt-0.5">10:00 AM • Auditorium</p>
+              <div className="flex items-center gap-1 mt-2">
+                  <span className="bg-green-50 text-green-700 text-[9px] font-bold px-1.5 py-0.5 rounded">Mandatory</span>
               </div>
-              <div className="flex items-center gap-2 text-[10px] text-gray-600">
-                 <MapPin size={12} />
-                 <span>Auditorium Hall A - Offline</span>
-              </div>
-           </div>
-           
-           <div className="flex items-center gap-2 mb-3">
-              <span className="px-2 py-0.5 bg-purple-50 text-purple-700 rounded text-[10px] font-medium">Pre-Placement Talk</span>
-           </div>
-           
-           <div className="flex items-center justify-between mt-2 pt-2 border-t border-gray-50">
-              <span className="text-[10px] text-green-600 flex items-center gap-1">✅ You're eligible</span>
-              <button className="bg-gray-900 text-white text-[10px] px-3 py-1.5 rounded-md font-medium">Register</button>
            </div>
         </div>
 
-         {/* Event Card 2 */}
-         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mt-3 relative overflow-hidden">
-           <div className="absolute top-0 left-0 w-1 h-full bg-red-500"></div>
-           <div className="flex gap-2">
-               <CompanyLogo color="bg-red-600" letter="Wi" />
-                <div>
-                   <h4 className="text-sm font-bold text-gray-900">Wipro - Aptitude Test</h4>
-                   <p className="text-[10px] text-gray-500">Wipro Technologies</p>
-                </div>
+         <div className="bg-white p-4 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-gray-100 flex gap-4">
+           <div className="flex flex-col items-center justify-center w-10 h-10 bg-gray-50 rounded-xl text-gray-600 shrink-0">
+              <span className="text-[9px] font-bold uppercase">Oct</span>
+              <span className="text-xs font-black">25</span>
            </div>
-           <div className="mt-2 text-[10px] text-gray-600 flex gap-2"><Calendar size={12}/> Jan 18 • 2:00 PM</div>
+           <div className="flex-1 min-w-0">
+              <h4 className="text-xs font-bold text-gray-900 truncate">TCS Online Assessment</h4>
+              <p className="text-[10px] text-gray-500 mt-0.5">02:00 PM • Remote</p>
+              <div className="flex items-center gap-1 mt-2">
+                  <span className="bg-gray-100 text-gray-600 text-[9px] font-bold px-1.5 py-0.5 rounded">Registered</span>
+              </div>
+           </div>
+        </div>
+
+        <div className="bg-white p-4 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-gray-100 flex gap-4 opacity-75">
+           <div className="flex flex-col items-center justify-center w-10 h-10 bg-gray-50 rounded-xl text-gray-600 shrink-0">
+              <span className="text-[9px] font-bold uppercase">Oct</span>
+              <span className="text-xs font-black">28</span>
+           </div>
+           <div className="flex-1 min-w-0">
+              <h4 className="text-xs font-bold text-gray-900 truncate">Resume Workshop</h4>
+              <p className="text-[10px] text-gray-500 mt-0.5">05:00 PM • Seminar Hall</p>
+           </div>
         </div>
       </div>
     </div>
@@ -191,46 +199,67 @@ export const EventsScreen = () => {
 // --- Screen 4: Chat ---
 export const ChatScreen = () => {
   return (
-    <div className="flex flex-col h-full bg-[#F5F7F4]">
+    <div className="flex flex-col h-full bg-[#FAFAFA] font-sans">
       {/* Header */}
-      <div className="px-3 py-3 bg-white flex items-center gap-2 shadow-sm z-10">
-         <ChevronLeft size={20} className="text-gray-400" />
-         <Avatar fallback="N" src="https://picsum.photos/seed/nina/100/100" />
+      <div className="px-4 py-4 bg-white flex items-center gap-3 shadow-[0_1px_2px_rgba(0,0,0,0.03)] z-10">
+         <ChevronLeft size={18} className="text-gray-400" />
+         <div className="relative">
+            <Avatar fallback="NP" />
+            <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-white"></div>
+         </div>
          <div className="flex-1">
             <h4 className="text-xs font-bold text-gray-900">Nina Patel</h4>
-            <p className="text-[10px] text-gray-500">Talent Recruiter @ Saral Software</p>
+            <p className="text-[9px] text-gray-500 font-medium">Recruiter @ CRED</p>
          </div>
-         <span className="text-[10px] text-gray-400">Mute</span>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 p-3 space-y-4 overflow-y-auto bg-[url('https://www.transparenttextures.com/patterns/subtle-white-feathers.png')]">
+      <div className="flex-1 p-4 space-y-4 overflow-y-auto">
          <div className="text-center">
-            <span className="text-[9px] text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">Tue, Aug 19 at 2:16 PM</span>
+            <span className="text-[9px] text-gray-400 font-medium">Today 2:16 PM</span>
          </div>
          
          {/* Message Left */}
-         <div className="flex gap-2">
-            <div className="mt-1"><Avatar fallback="N" src="https://picsum.photos/seed/nina/100/100" /></div>
-            <div className="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm max-w-[85%] text-xs text-gray-800 leading-relaxed border border-gray-100">
-               <p className="mb-1 font-bold">Hi Devon,</p>
-               <p>Saw your profile, and it looks like your qualifications and experience are a good match for our Brand Partnerships position.</p>
+         <div className="flex items-end gap-2">
+            <Avatar fallback="NP" size="w-6 h-6" />
+            <div className="bg-white p-3 rounded-2xl rounded-bl-none shadow-sm border border-gray-100 max-w-[85%]">
+               <p className="text-[11px] text-gray-700 leading-relaxed">
+                  Hi Arjun! We were impressed by your portfolio. Would you be free for a quick chat tomorrow?
+               </p>
             </div>
          </div>
 
-         {/* Job Card Attachment */}
-         <div className="ml-10 bg-white p-3 rounded-xl shadow-sm border border-gray-100 max-w-[85%]">
-            <div className="flex gap-2 items-center mb-2">
-               <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center text-white font-bold text-xs">S</div>
-               <div>
-                  <h5 className="font-bold text-xs">Saral Software</h5>
-                  <p className="text-[9px] text-gray-500">Technology</p>
-               </div>
+         {/* Message Right */}
+         <div className="flex items-end gap-2 flex-row-reverse">
+            <div className="bg-[#0D1C22] p-3 rounded-2xl rounded-br-none shadow-md max-w-[85%]">
+               <p className="text-[11px] text-white leading-relaxed">
+                  Hi Nina, thank you! Yes, I am available anytime after 2 PM.
+               </p>
             </div>
-            <div className="font-bold text-xs mb-1">Brand Partnerships Manager</div>
-            <div className="text-[10px] text-gray-500">₹12-18 LPA • Full-time job</div>
-            <div className="text-[10px] text-gray-400 mt-1">Pune, MH (Hybrid) • 4 days ago</div>
          </div>
+         
+         {/* Attachment Preview */}
+         <div className="flex items-end gap-2">
+            <Avatar fallback="NP" size="w-6 h-6" />
+            <div className="bg-white p-2 rounded-2xl rounded-bl-none shadow-sm border border-gray-100 max-w-[75%]">
+                <div className="flex items-center gap-2 bg-gray-50 p-2 rounded-xl">
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600">
+                        <Calendar size={14} />
+                    </div>
+                    <div>
+                        <p className="text-[10px] font-bold text-gray-900">Interview Invite</p>
+                        <p className="text-[9px] text-gray-500">Google Meet</p>
+                    </div>
+                </div>
+            </div>
+         </div>
+      </div>
+      
+      {/* Input Area */}
+      <div className="p-3 bg-white border-t border-gray-100">
+          <div className="bg-gray-50 rounded-full h-10 w-full flex items-center px-4 text-xs text-gray-400">
+              Type a message...
+          </div>
       </div>
     </div>
   );
